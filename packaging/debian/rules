@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+export PYBUILD_NAME = flag_attn
+export SETUPTOOLS_SCM_PRETEND_VERSION ?= 0.3.0
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+# Smoke import test: run a "can the built module be imported" check.
+# Doesn't run pytest because most flag_attn tests JIT-compile Triton
+# kernels and need a GPU runner — out of scope for our packaging CI.
+# But this DOES catch missing module-level deps, syntax errors,
+# entry-point misconfig, and silent install-path bugs.
+override_dh_auto_test:
+	@echo "=== smoke import test ==="
+	@for d in .pybuild/cpython3_*/build $(CURDIR)/src; do \
+	    if [ -d "$$d/flag_attn" ]; then \
+	        echo "Found build dir: $$d"; \
+	        PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$$d" python3 -c \
+	            "import flag_attn; print('OK', getattr(flag_attn, '__version__', 'unknown'))"; \
+	        exit 0; \
+	    fi; \
+	done; \
+	echo "ERROR: could not find a built flag_attn module"; exit 1

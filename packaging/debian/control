@@ -1,0 +1,30 @@
+Source: flag-attention
+Section: python
+Priority: optional
+Maintainer: FlagOS Contributors <contact@flagos.io>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3-all,
+               python3-setuptools,
+               python3-setuptools-scm,
+               python3-wheel,
+               pybuild-plugin-pyproject
+Standards-Version: 4.6.2
+Homepage: https://github.com/flagos-ai/FlagAttention
+Vcs-Browser: https://github.com/flagos-ai/FlagAttention
+Vcs-Git: https://github.com/flagos-ai/FlagAttention.git
+Rules-Requires-Root: no
+
+Package: python3-flag-attention
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Recommends: python3-flagtree-nvidia | python3-triton
+Description: FlagAttention — memory-efficient attention operators (Triton)
+ FlagAttention is a collection of memory-efficient attention operators
+ implemented in the Triton language. It targets large-language-model
+ training and inference workloads where the standard PyTorch attention
+ path is memory-bound.
+ .
+ Triton (provided here by python3-flagtree-nvidia or upstream
+ python3-triton) is required at runtime; without it the kernels
+ cannot JIT-compile.
