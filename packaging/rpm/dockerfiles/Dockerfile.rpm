@@ -14,9 +14,10 @@ COPY . /workspace/FlagAttention
 
 RUN SPEC_VERSION=$(grep '^Version:' /workspace/FlagAttention/packaging/rpm/specs/flag-attention.spec | awk '{print $2}') && \
     tar czf /root/rpmbuild/SOURCES/flag-attention-${SPEC_VERSION}.tar.gz \
-        -C /workspace \
-        --transform "s|^FlagAttention|flag-attention-${SPEC_VERSION}|" \
-        FlagAttention
+        -C /workspace/FlagAttention \
+        --exclude='./.git' \
+        --transform "s|^\./|flag-attention-${SPEC_VERSION}/|" \
+        .
 
 RUN rpmbuild -ba /workspace/FlagAttention/packaging/rpm/specs/flag-attention.spec 2>&1 || \
     { echo "=== build failed ==="; \
