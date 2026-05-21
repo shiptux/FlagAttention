@@ -17,8 +17,8 @@ Rules-Requires-Root: no
 
 Package: python3-flag-attention
 Architecture: all
-Depends: ${python3:Depends}, ${misc:Depends}
-Recommends: python3-flagtree-nvidia | python3-triton
+Depends: ${python3:Depends}, ${misc:Depends},
+         python3-flagtree-nvidia | python3-triton
 Description: FlagAttention — memory-efficient attention operators (Triton)
  FlagAttention is a collection of memory-efficient attention operators
  implemented in the Triton language. It targets large-language-model
