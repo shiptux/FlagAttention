@@ -7,8 +7,7 @@ Summary:        FlagAttention — memory-efficient attention operators (Triton)
 
 License:        Apache-2.0
 URL:            https://github.com/flagos-ai/FlagAttention
-Source0:        flag-attention-%{version}.tar.gz
-
+Source0:        %{url}/archive/v%{version}/flag-attention-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools >= 60
