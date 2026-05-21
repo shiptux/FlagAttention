@@ -1,6 +1,9 @@
 #!/usr/bin/make -f
 export DH_VERBOSE = 1
 export PYBUILD_NAME = flag_attn
+# NOTE: when bumping versions, update BOTH this value AND debian/changelog
+# (and packaging/rpm/specs/flag-attention.spec). The native source tarball
+# does not carry git metadata, so setuptools_scm falls back to this value.
 export SETUPTOOLS_SCM_PRETEND_VERSION ?= 0.3.0
 
 %:
