@@ -17,8 +17,16 @@ Rules-Requires-Root: no
 
 Package: python3-flag-attention
 Architecture: all
-Depends: ${python3:Depends}, ${misc:Depends},
-         python3-flagtree-nvidia | python3-triton
+Depends: python3:any, ${misc:Depends}, python3-pytest
+# python3-pytest is a runtime Depends (not just for tests) because
+# flag_attn/__init__.py imports flag_attn.testing → testing/piecewise.py
+# which does `import pytest` at module scope. Upstream should lazy-import,
+# but for now we keep the consumer install working.
+# Triton (FlagOS-built or upstream) is NOT a hard Depends: the upstream
+# python3-triton is too old (Ubuntu noble ships 2.0; PyPI is 2.4+), and the
+# right install path for users is pip. python3-flagtree-nvidia is the only
+# distro-distributable option, so we Recommend it.
+Recommends: python3-flagtree-nvidia
 Description: FlagAttention — memory-efficient attention operators (Triton)
  FlagAttention is a collection of memory-efficient attention operators
  implemented in the Triton language. It targets large-language-model
