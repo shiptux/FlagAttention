@@ -19,7 +19,7 @@ WORKDIR /workspace/FlagAttention
 RUN cp -r packaging/debian debian
 
 # -d: skip build-deps check (we already provisioned them above)
-RUN dpkg-buildpackage -us -uc -b -d || \
+RUN dpkg-buildpackage -us -uc -b || \
     { echo "=== build failed ===" >&2; \
       find /workspace -name "*.log" -exec echo "=== {} ===" \; -exec cat {} \; 2>/dev/null || true; \
       exit 1; }

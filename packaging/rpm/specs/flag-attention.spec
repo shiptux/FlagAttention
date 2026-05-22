@@ -11,7 +11,8 @@ Name:           python3-flag-attention
 #   1. this Version: line
 #   2. packaging/debian/changelog (latest entry)
 #   3. packaging/debian/rules SETUPTOOLS_SCM_PRETEND_VERSION
-#   4. SETUPTOOLS_SCM_PRETEND_VERSION env passed to %build / %install below
+# (spec %build / %install pass SETUPTOOLS_SCM_PRETEND_VERSION=%{version} so
+#  they self-update with the Version: line above.)
 Version:        0.3.0
 Release:        1%{?dist}
 Summary:        FlagAttention — memory-efficient attention operators (Triton)
@@ -34,11 +35,11 @@ Collection of memory-efficient attention operators implemented in the Triton lan
 %autosetup -n flag-attention-%{version}
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=0.3.0
+export SETUPTOOLS_SCM_PRETEND_VERSION=%{version}
 %pyproject_wheel
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=0.3.0
+export SETUPTOOLS_SCM_PRETEND_VERSION=%{version}
 %pyproject_install
 %pyproject_save_files flag_attn
 
