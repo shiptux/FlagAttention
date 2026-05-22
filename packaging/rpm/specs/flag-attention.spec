@@ -1,20 +1,24 @@
 %global debug_package %{nil}
 
-# Filter out auto-generated Requires for ML/non-distro runtime deps
-# (torch GPU build, triton, hydra-core...): the distro has no GPU-capable
-# python3-torch, no current triton, no hydra-core; users install matching
-# versions via pip per packaging/INSTALL.md. Match python3dist and
-# python3.X.Ydist forms (Fedora >= 39 uses the latter).
+# Filter the auto-generated Requires for: triton.
+# Reason: distro triton has no current version; users install via pip.
+# See packaging/INSTALL.md (or future flagos-packaging install docs) for the
+# user-side pip install incantation.
 %global __requires_exclude ^python3.*dist.*(triton)
 
 Name:           python3-flag-attention
+# NOTE: version is duplicated across 4 places — keep them in sync when bumping:
+#   1. this Version: line
+#   2. packaging/debian/changelog (latest entry)
+#   3. packaging/debian/rules SETUPTOOLS_SCM_PRETEND_VERSION
+#   4. SETUPTOOLS_SCM_PRETEND_VERSION env passed to %build / %install below
 Version:        0.3.0
 Release:        1%{?dist}
 Summary:        FlagAttention — memory-efficient attention operators (Triton)
 
 License:        Apache-2.0
 URL:            https://github.com/flagos-ai/FlagAttention
-Source0:        %{url}/archive/v%{version}/flag-attention-%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/flag-attention-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools >= 60
