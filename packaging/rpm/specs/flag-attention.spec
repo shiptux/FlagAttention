@@ -4,8 +4,7 @@
 # Reason: distro triton has no current version; users install via pip.
 # See packaging/INSTALL.md (or future flagos-packaging install docs) for the
 # user-side pip install incantation.
-%global __requires_exclude ^python3.*dist.*(triton)
-
+%global __requires_exclude ^python3(\.[0-9]+)?dist\((triton)\)$
 Name:           python3-flag-attention
 # NOTE: version is duplicated across 4 places — keep them in sync when bumping:
 #   1. this Version: line
